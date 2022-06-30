@@ -1,7 +1,7 @@
 // Sobre carga de funciones
 // solo funciona con funciones declaradas como function
 
-function parseStr(input: string | string[]): string | string[] {
+export function parseStr(input: string | string[]): string | string[] {
   if (Array.isArray(input)) {
     return input.join('') // string
   }
