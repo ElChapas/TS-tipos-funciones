@@ -1,19 +1,36 @@
 import { Product } from "./product.model";
+import { CreateProductDto, FindProductDto, UpdateDto } from './product.dto'
+import { faker } from '@faker-js/faker';
+
 
 export const products: Product[] = [];
 
-export const addProduct = (data: Product) => {
-    products.push(data);
-}
-
 const getIndex = (id: number | string) => {
-    return products.findIndex(p => p.id === id)
+  return products.findIndex(p => p.id === id)
 }
 
-export const updateProduct = (id: number | string, changes: Object) => {
+export const addProduct = (data: CreateProductDto) => {
+    const newProduct = {
+      ...data,
+      id: faker.datatype.uuid(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      category: {
+        id: data.categoryId,
+        name: faker.commerce.department(),
+        createdAt: faker.date.recent(),
+        updatedAt: faker.date.recent(),
+      },
+    }
+
+    products.push(newProduct);
+}
+
+export const updateProduct = (id: number | string, changes: UpdateDto): Product => {
     const index = getIndex(id);
-    const p = products[index];
-    products[index] = {...p, ...changes};
+    const prevData = products[index];
+    products[index] = {...prevData, ...changes, updatedAt: new Date()};
+    return products[index];
 }
 
 export const deleteProduct = (id: string | number) => {
@@ -21,6 +38,7 @@ export const deleteProduct = (id: string | number) => {
     products.splice(index, index)
 }
 
-export const getProduct = (id: string | number) => {
-    return products.find(p => p.id === id)
+export const findProducts = (data: FindProductDto): Product[] => {
+    const product = products.find(p => p.id === data.id)
+    return products;
 }

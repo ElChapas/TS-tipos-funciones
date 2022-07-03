@@ -12,6 +12,8 @@ export interface Product extends BaseModel  {
     color: string;
     price: number;
     isNew: boolean;
-    category: Category
-    tags: string[]
+    category: Category;
+    tags: string[];
+    readonly createdAt: Date;
+    updatedAt: Date;
 }
