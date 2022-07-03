@@ -21,7 +21,8 @@ console.log("----------------------------------------------------");
 // deleteProduct(1);
 // console.log(products);
 console.log("----------------------------------------------------");
-console.log(updateProduct(1, {
+const prod = products[0]
+console.log(updateProduct(prod.id, {
   title: 'hi'
 }));
 
